@@ -1,47 +1,11 @@
 "use client";
+import Link from "next/link";
+import {FormEvent,useState} from "react";
+import {createClient} from "@/lib/supabase/client";
+import {useRouter} from "next/navigation";
 
-import { FormEvent, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
-);
-
-export default function Login() {
-  const [mode, setMode] = useState<"login"|"signup">("login");
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  async function submit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setLoading(true); setMessage("");
-    const f = new FormData(e.currentTarget);
-    const email = String(f.get("email"));
-    const password = String(f.get("password"));
-
-    const result = mode === "login"
-      ? await supabase.auth.signInWithPassword({ email, password })
-      : await supabase.auth.signUp({ email, password });
-
-    setLoading(false);
-    if (result.error) return setMessage(result.error.message);
-    if (mode === "signup") return setMessage("Account created. Check your email if confirmation is enabled.");
-    window.location.href = "/dashboard";
-  }
-
-  return <main className="auth"><div className="authCard">
-    <div className="brand">Flow<span>Desk</span></div>
-    <h1>{mode === "login" ? "Business login" : "Create your business account"}</h1>
-    <p>{mode === "login" ? "Access your real leads, bookings and reports." : "Start with one secure business workspace."}</p>
-    <form onSubmit={submit}>
-      <input name="email" type="email" required placeholder="Business email" />
-      <input name="password" type="password" required minLength={8} placeholder="Password (8+ characters)" />
-      <button disabled={loading}>{loading ? "Please wait…" : mode === "login" ? "Sign in" : "Create account"}</button>
-    </form>
-    {message && <p className="status">{message}</p>}
-    <button className="linkButton" onClick={() => setMode(mode === "login" ? "signup" : "login")}>
-      {mode === "login" ? "Create an account" : "I already have an account"}
-    </button>
-  </div></main>;
+export default function Login(){
+ const r=useRouter();const[loading,setLoading]=useState(false);const[error,setError]=useState("");
+ async function submit(e:FormEvent<HTMLFormElement>){e.preventDefault();setLoading(true);setError("");const f=new FormData(e.currentTarget);const s=createClient();const{error}=await s.auth.signInWithPassword({email:String(f.get("email")),password:String(f.get("password"))});if(error)setError("Email or password is incorrect.");else r.push("/dashboard");setLoading(false)}
+ return <main className="authPage"><div className="authCard"><Link className="brand" href="/">Follow<span>Flow</span></Link><div className="authIntro"><h1>Welcome back 👋</h1><p>Log in to manage your customers and follow-ups.</p></div>{error&&<div className="error">{error}</div>}<form className="form" onSubmit={submit}><div className="field"><label>Email</label><input name="email" type="email" placeholder="you@business.com" required/></div><div className="field"><label>Password</label><input name="password" type="password" placeholder="Your password" required/></div><button className="btn primary" disabled={loading}>{loading?"Logging in…":"Log in"}</button></form><Link className="textLink" href="/forgot-password">Forgot your password?</Link><p className="authBottom">New to FollowFlow? <Link href="/signup">Create a free account</Link></p></div></main>
 }
