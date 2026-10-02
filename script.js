@@ -1,0 +1,4 @@
+const form=document.getElementById('leadForm');const msg=document.getElementById('formMessage');const toastEl=document.getElementById('toast');
+function toast(text){toastEl.textContent=text;toastEl.classList.add('show');setTimeout(()=>toastEl.classList.remove('show'),2400)}
+form.addEventListener('submit',e=>{e.preventDefault();const data=new FormData(form);const name=data.get('name');msg.textContent='✓ Lead captured — automation triggered for '+name+'.';toast('New lead captured ✓');form.reset();});
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const el=document.querySelector(a.getAttribute('href'));if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth'})}}));
