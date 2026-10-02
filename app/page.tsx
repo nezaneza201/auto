@@ -1,62 +1,29 @@
-"use client";
+import Link from "next/link";
 
-import { FormEvent, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
+const steps=[
+  ["1","Add a lead","Save a customer inquiry in a few seconds."],
+  ["2","Follow up","See who needs a call or message today."],
+  ["3","Move the lead","Update the customer from New to Won or Lost."]
+];
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
-);
-
-export default function Home() {
-  const [status, setStatus] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  async function submit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setLoading(true);
-    setStatus("");
-    const form = new FormData(e.currentTarget);
-
-    const { error } = await supabase.from("public_leads").insert({
-      name: String(form.get("name") || "").trim(),
-      phone: String(form.get("phone") || "").trim(),
-      service: String(form.get("service") || "").trim(),
-      message: String(form.get("message") || "").trim()
-    });
-
-    setLoading(false);
-    setStatus(error ? "We could not save your enquiry. Please try WhatsApp or call us." : "Enquiry received. The business has been notified.");
-    if (!error) e.currentTarget.reset();
-  }
-
-  return (
-    <main>
-      <nav className="nav"><div className="brand">Flow<span>Desk</span></div><a href="/login">Business Login</a></nav>
-      <section className="hero">
-        <div className="eyebrow">REAL BUSINESS AUTOMATION</div>
-        <h1>Turn every enquiry into a customer.</h1>
-        <p>Capture leads, manage bookings, follow up with customers and track what is actually happening in your business.</p>
-        <div className="actions"><a className="button" href="#enquiry">Contact the business</a><a className="ghost" href="/login">Business dashboard →</a></div>
-      </section>
-      <section className="grid">
-        <article><b>01</b><h3>Lead capture</h3><p>Every enquiry is stored as a real customer record.</p></article>
-        <article><b>02</b><h3>Bookings</h3><p>Track requested, confirmed, completed and cancelled bookings.</p></article>
-        <article><b>03</b><h3>Follow-ups</h3><p>Never lose a customer because nobody followed up.</p></article>
-        <article><b>04</b><h3>Reporting</h3><p>See real activity instead of fake dashboard numbers.</p></article>
-      </section>
-      <section id="enquiry" className="panel">
-        <div><div className="eyebrow">CONTACT</div><h2>Send an enquiry</h2><p>Your information goes into the business's FlowDesk lead queue.</p></div>
-        <form onSubmit={submit}>
-          <input name="name" required placeholder="Your name" />
-          <input name="phone" required placeholder="Phone / WhatsApp" />
-          <input name="service" required placeholder="Service or booking" />
-          <textarea name="message" placeholder="Tell us what you need" rows={4} />
-          <button disabled={loading}>{loading ? "Sending…" : "Send enquiry"}</button>
-          {status && <p className="status">{status}</p>}
-        </form>
-      </section>
-      <footer>FlowDesk © 2026 · Built for real businesses.</footer>
-    </main>
-  );
+export default function Home(){
+ return <main>
+  <nav className="nav"><Link className="brand" href="/">Follow<span>Flow</span></Link><div className="navlinks"><a href="#how">How it works</a><a href="#features">Features</a><Link href="/login">Log in</Link><Link className="navCta" href="/signup">Start free</Link></div></nav>
+  <section className="hero simpleHero">
+   <div className="eyebrow">SIMPLE CUSTOMER FOLLOW-UP</div>
+   <h1>Turn missed leads into paying customers.</h1>
+   <p>FollowFlow gives your business one simple place to save customer inquiries, remember follow-ups, and see which customers become sales.</p>
+   <div className="actions"><Link className="button" href="/signup">Start free</Link><a className="ghost" href="#how">See how it works ↓</a></div>
+   <div className="heroNote">No complicated setup. No fake messaging. Just your customer follow-up workspace.</div>
+  </section>
+  <section id="features" className="featureStrip">
+   {["Keep every lead in one place","Know who to contact next","Track wins and lost opportunities"].map((x,i)=><article key={x}><span>0{i+1}</span><h3>{x}</h3><p>Simple tools made for busy business owners.</p></article>)}
+  </section>
+  <section id="how" className="section">
+   <div className="sectionHead"><div className="eyebrow">HOW IT WORKS</div><h2>Three steps. That's it.</h2><p>You don't need to be technical to use FollowFlow.</p></div>
+   <div className="steps">{steps.map(([n,t,d])=><article key={n}><b>{n}</b><h3>{t}</h3><p>{d}</p></article>)}</div>
+  </section>
+  <section className="cta"><div><div className="eyebrow">READY?</div><h2>Stop losing customers because you forgot to follow up.</h2><p>Start your workspace and manage your first leads today.</p></div><Link className="button" href="/signup">Create my workspace</Link></section>
+  <footer><span>FollowFlow © 2026</span><span>Built for small and medium businesses.</span></footer>
+ </main>
 }
