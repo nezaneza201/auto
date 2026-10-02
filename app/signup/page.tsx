@@ -10,7 +10,7 @@ export default function Signup() {
   const supabase = createClient();
   const [form, setForm] = useState({ name: "", business: "", email: "", password: "" });
   const [error, setError] = useState("");
-  const [done, setDone] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   function set(key: string, value: string) {
     setForm((current) => ({ ...current, [key]: value }));
@@ -19,7 +19,7 @@ export default function Signup() {
   async function submit(e: FormEvent) {
     e.preventDefault();
     setError("");
-    setDone(false);
+    setLoading(true);
 
     const { data, error } = await supabase.auth.signUp({
       email: form.email,
@@ -34,26 +34,31 @@ export default function Signup() {
 
     if (error) {
       setError(error.message);
+      setLoading(false);
       return;
     }
 
-    if (data.user && data.session) {
-      const { error: profileError } = await supabase.from("users").upsert({
-        id: data.user.id,
-        name: form.name,
-        business_name: form.business,
-        email: form.email,
-      });
-
-      if (profileError) {
-        setError(profileError.message);
-        return;
-      }
-
-      router.push("/dashboard");
-    } else {
-      setDone(true);
+    if (!data.user || !data.session) {
+      setError("Account created, but automatic login is unavailable. Please disable email confirmation in Supabase Auth settings.");
+      setLoading(false);
+      return;
     }
+
+    const { error: profileError } = await supabase.from("users").upsert({
+      id: data.user.id,
+      name: form.name,
+      business_name: form.business,
+      email: form.email,
+    });
+
+    if (profileError) {
+      setError(profileError.message);
+      setLoading(false);
+      return;
+    }
+
+    router.replace("/dashboard");
+    router.refresh();
   }
 
   return (
@@ -71,11 +76,6 @@ export default function Signup() {
         </p>
 
         {error && <div className="error">{error}</div>}
-        {done && (
-          <div className="success">
-            Your workspace is almost ready. Check your email to confirm your account, then log in.
-          </div>
-        )}
 
         <form className="form" onSubmit={submit}>
           <label>Your name
@@ -90,7 +90,9 @@ export default function Signup() {
           <label>Password
             <input required minLength={8} type="password" autoComplete="new-password" placeholder="At least 8 characters" value={form.password} onChange={(e) => set("password", e.target.value)} />
           </label>
-          <button className="btn" type="submit">Create my workspace →</button>
+          <button className="btn" type="submit" disabled={loading}>
+            {loading ? "Creating your workspace..." : "Create my workspace →"}
+          </button>
         </form>
 
         <p className="muted small authFoot">
