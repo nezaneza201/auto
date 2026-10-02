@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#070a12">
+  <meta name="description" content="FlowDesk — customer automation for modern businesses. Capture leads, manage bookings, follow up and request reviews from one simple dashboard.">
+  <title>FlowDesk — Business Automation</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="glow glow-one"></div><div class="glow glow-two"></div>
+  <header class="nav">
+    <a class="brand" href="#top"><span class="brand-mark">F</span><span>Flow<span>Desk</span></span></a>
+    <nav>
+      <a href="#features">Features</a><a href="#workflow">How it works</a><a href="#dashboard">Dashboard</a>
+    </nav>
+    <a class="nav-cta" href="#demo">Try demo <span>↗</span></a>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="eyebrow"><span class="pulse"></span> CUSTOMER AUTOMATION, SIMPLIFIED</div>
+      <h1>Turn every enquiry into a <em>customer.</em></h1>
+      <p class="hero-copy">FlowDesk helps restaurants, hotels, salons, shops and service businesses capture leads, organize bookings and follow up automatically — without complicated software.</p>
+      <div class="hero-actions"><a class="primary" href="#demo">Launch dashboard <span>→</span></a><a class="secondary" href="#workflow">See the workflow</a></div>
+      <div class="trust"><span>⚡ Fast setup</span><span>🔒 Simple & secure</span><span>📱 Mobile ready</span></div>
+    </section>
+
+    <section class="dashboard-card" id="dashboard">
+      <div class="dash-top"><div><span class="live-dot"></span> Live business overview</div><span class="date">Today · Oct 2, 2026</span></div>
+      <div class="metrics">
+        <div class="metric"><span>New leads</span><strong>24</strong><small class="up">↑ 18% this week</small></div>
+        <div class="metric"><span>Bookings</span><strong>12</strong><small class="up">↑ 9% this week</small></div>
+        <div class="metric"><span>Follow-ups</span><strong>31</strong><small>8 due today</small></div>
+        <div class="metric"><span>Reviews</span><strong>4.8 ★</strong><small class="up">+0.2 this month</small></div>
+      </div>
+      <div class="dash-grid">
+        <div class="panel"><div class="panel-head"><b>Recent customers</b><button onclick="toast('Customer list refreshed ✓')">Refresh</button></div>
+          <div class="customer"><span class="avatar">AM</span><div><b>Alex M.</b><small>Table for 4 · 12:30</small></div><span class="status booked">Booked</span></div>
+          <div class="customer"><span class="avatar">JK</span><div><b>Jean K.</b><small>WhatsApp enquiry · 5 min ago</small></div><span class="status new">New</span></div>
+          <div class="customer"><span class="avatar">CN</span><div><b>Clara N.</b><small>Follow-up due today</small></div><span class="status follow">Follow-up</span></div>
+        </div>
+        <div class="panel"><div class="panel-head"><b>Automation activity</b><span class="mini-live">LIVE</span></div>
+          <div class="activity"><span class="ico">✦</span><div><b>New lead captured</b><small>Website form → notification sent</small></div><time>2m</time></div>
+          <div class="activity"><span class="ico">↗</span><div><b>Booking confirmed</b><small>Confirmation message prepared</small></div><time>11m</time></div>
+          <div class="activity"><span class="ico">★</span><div><b>Review request</b><small>Sent after completed visit</small></div><time>34m</time></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="section-label">ONE SYSTEM. LESS CHAOS.</div>
+      <h2>Everything your business needs to <span>follow through.</span></h2>
+      <div class="features">
+        <article><div class="feature-icon">◉</div><h3>Lead capture</h3><p>Collect customer name, contact details, service and preferred time from a clean mobile form.</p></article>
+        <article><div class="feature-icon">▣</div><h3>Booking flow</h3><p>Turn enquiries into organized booking requests instead of losing them in chats and notebooks.</p></article>
+        <article><div class="feature-icon">↻</div><h3>Follow-ups</h3><p>Keep conversations moving with clear follow-up tasks and ready-to-send customer messages.</p></article>
+        <article><div class="feature-icon">★</div><h3>Review requests</h3><p>Ask happy customers for feedback after their visit and keep your reputation growing.</p></article>
+        <article><div class="feature-icon">⌁</div><h3>Business alerts</h3><p>See new enquiries, bookings and actions in one place so nothing quietly disappears.</p></article>
+        <article><div class="feature-icon">▤</div><h3>Simple reporting</h3><p>Track leads, bookings and follow-ups with a dashboard your team can understand instantly.</p></article>
+      </div>
+    </section>
+
+    <section class="workflow section" id="workflow">
+      <div class="section-label">THE FLOW</div><h2>From “Hello” to <span>loyal customer.</span></h2>
+      <div class="steps">
+        <div class="step"><span>01</span><h3>Customer contacts you</h3><p>Website, WhatsApp or a simple enquiry form.</p></div>
+        <div class="connector">→</div>
+        <div class="step"><span>02</span><h3>FlowDesk captures it</h3><p>Customer information becomes a structured lead.</p></div>
+        <div class="connector">→</div>
+        <div class="step"><span>03</span><h3>Team takes action</h3><p>Booking, confirmation and follow-up are organized.</p></div>
+        <div class="connector">→</div>
+        <div class="step"><span>04</span><h3>Customer returns</h3><p>Follow up, request feedback and build the relationship.</p></div>
+      </div>
+    </section>
+
+    <section class="demo section" id="demo">
+      <div class="demo-copy"><div class="section-label">LIVE DEMO</div><h2>Capture a lead in <span>seconds.</span></h2><p>This demo shows the customer intake experience. Submit it and watch the automation activity update instantly.</p><div class="demo-points"><span>✓ No account required</span><span>✓ Mobile friendly</span><span>✓ Ready for customization</span></div></div>
+      <form id="leadForm" class="lead-form">
+        <div class="form-head"><div><b>New customer enquiry</b><small>We'll add it to the automation feed.</small></div><span>●</span></div>
+        <label>Name<input required name="name" placeholder="Customer name"></label>
+        <label>Phone / WhatsApp<input required name="phone" placeholder="+250 7xx xxx xxx"></label>
+        <label>What do you need?<select name="service"><option>Booking / reservation</option><option>Product enquiry</option><option>Service appointment</option><option>General enquiry</option></select></label>
+        <button class="primary full" type="submit">Capture lead <span>→</span></button>
+        <div id="formMessage" class="form-message"></div>
+      </form>
+    </section>
+
+    <section class="cta">
+      <div><div class="section-label">BUILT FOR GROWTH</div><h2>Stop letting good customers <span>slip away.</span></h2><p>Start with a simple automation system and grow it as your business grows.</p></div>
+      <a class="primary" href="#demo">Start with FlowDesk →</a>
+    </section>
+  </main>
+  <footer><div class="brand"><span class="brand-mark">F</span><span>Flow<span>Desk</span></span></div><p>Customer automation for ambitious local businesses.</p><span>© 2026 FlowDesk</span></footer>
+  <div id="toast" class="toast"></div>
+  <script src="script.js"></script>
+</body>
+</html>
